@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Produits Lyon 2 — Infos & Allergènes</title>
+<meta name="description" content="Liste des produits disponibles à Lyon 2 avec ingrédients, allergènes, Nutri-Score et Éco-Score." />
+<style>
+  :root {
+    --bg:#f6fdf8; --card:#ffffff; --muted:#476154; --text:#0b1f14;
+    --accent:#22c55e; --accent-2:#10b981; --chip:#e8f7ee; --border:#def7e6; --ring:rgba(34,197,94,.35);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
+  header { position:sticky; top:0; z-index:20; backdrop-filter:saturate(1.2) blur(8px); background:rgba(246,253,248,.9); border-bottom:1px solid var(--border); }
+  .container { max-width:1100px; margin:0 auto; padding:16px; }
+  .title { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .logo, .brand-img { width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:inline-flex; align-items:center; justify-content:center; color:white; font-weight:800; }
+  .brand-img { background:none; }
+  .brand-img img { max-height:32px; max-width:120px; height:auto; width:auto; display:block; object-fit:contain; }
+  .title h1 { margin:0; font-size:1.15rem; }
+  .badge { font-size:.75rem; padding:2px 8px; border-radius:999px; background:var(--chip); color:var(--muted); border:1px solid var(--border); }
+  .ctrls { display:grid; grid-template-columns:1fr; gap:10px; margin-top:10px; }
+  @media (min-width:720px) { .ctrls { grid-template-columns:1fr 200px 200px; } }
+  input[type="search"], select { width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--border); background:var(--card); color:var(--text); outline:none; }
+  input[type="search"]:focus, select:focus { box-shadow:0 0 0 4px var(--ring); border-color:var(--accent); }
+  main.container { padding-top:12px; }
+  .grid { display:grid; grid-template-columns:1fr; gap:14px; }
+  @media (min-width:640px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (min-width:980px) { .grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:14px; display:flex; flex-direction:column; gap:10px; box-shadow: 0 6px 16px rgba(34,197,94, .06); }
+  .card h3 { margin:0; font-size:1.02rem; }
+  .muted { color:var(--muted); font-size:.9rem; }
+  .row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .chip { background:var(--chip); border:1px solid var(--border); padding:2px 8px; border-radius:999px; font-size:.8rem; }
+  .score { font-weight:700; padding:2px 8px; border-radius:8px; border:1px solid var(--border); background:var(--chip); }
+  .score[data-type="nutri"][data-value="A"] { background:#eafbf0; border-color:#a7f3d0; }
+  .score[data-type="nutri"][data-value="B"] { background:#f0fde8; border-color:#c7f9b5; }
+  .score[data-type="nutri"][data-value="C"] { background:#fffbe6; border-color:#fde68a; }
+  .score[data-type="nutri"][data-value="D"] { background:#fff1e6; border-color:#fdba74; }
+  .score[data-type="nutri"][data-value="E"] { background:#ffecec; border-color:#fca5a5; }
+  .score[data-type="eco"][data-value="A"] { background:#eafbf0; border-color:#a7f3d0; }
+  .score[data-type="eco"][data-value="B"] { background:#f0fde8; border-color:#c7f9b5; }
+  .score[data-type="eco"][data-value="C"] { background:#fffbe6; border-color:#fde68a; }
+  .score[data-type="eco"][data-value="D"] { background:#fff1e6; border-color:#fdba74; }
+  .score[data-type="eco"][data-value="E"] { background:#ffecec; border-color:#fca5a5; }
+  .footer { text-align:center; color:var(--muted); font-size:.8rem; padding:20px 0 40px; }
+  .empty { text-align:center; padding:40px; border:1px dashed var(--border); border-radius:16px; color:var(--muted); }
+  .sr { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+  .pill { display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border-radius:999px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:white; font-size:.8rem; font-weight:700; }
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="title">
+      <div id="brandSlot" class="logo">MG</div>
+      <h1>Produits disponibles — Lyon 2</h1>
+      <span class="badge">MAJ 2025-10-07</span>
+      <span class="pill">My Green Shop</span>
+    </div>
+    <div class="ctrls" role="search">
+      <label class="sr" for="q">Recherche</label>
+      <input id="q" type="search" placeholder="Rechercher un produit, un ingrédient, un allergène…" autocomplete="off" />
+      <select id="nutri">
+        <option value="">Nutri-Score (tous)</option>
+        <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+      </select>
+      <select id="eco">
+        <option value="">Éco-Score (tous)</option>
+        <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option>
+        <option value="NA">Sans éco-score</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div id="grid" class="grid" aria-live="polite"></div>
+  <div id="empty" class="empty" style="display:none">Aucun produit ne correspond à votre recherche.</div>
+</main>
+
+<footer class="footer">
+  Données fournies par l'exploitant — Informations indicatives, se référer à l'emballage en cas de doute.
+</footer>
+
+<script>
+  // 👉 REMPLACE ICI par l'URL de TON LOGO (PNG/SVG/JPG). Laisse vide pour le badge "MG".
+  const LOGO_URL = "";
+
+  const DATA = [{"id": 1, "produit": "Kinder Bueno", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Chocolat au lait (sucre, beurre de cacao, pâte de cacao, lait écrémé en poudre,\n beurre concentré, lécithine de soja, vanilline), sucre, huile de palme, farine de froment, \nnoisettes (10,8 %), lait écrémé en poudre, cacao maigre, poudres à lever, sel, vanilline", "allergenes": ["['Lait', 'gluten', 'noisettes', 'soja']"], "nutriscore": "E", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 2, "produit": "Cristaline", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Eau de source Cristaline", "allergenes": ["[]"], "nutriscore": "A", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 3, "produit": "Volvic aromatisée", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Eau minérale naturelle Volvic (≈ 98,5 %), sucre (~ 1 %), arôme naturel (ex. citron) + \nacidifiant : acide citrique", "allergenes": ["[]"], "nutriscore": "C", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 4, "produit": "KitKat", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Sucre, farine de blé, beurre de cacao, lait écrémé en poudre, huile de palme, pâte de \ncacao, beurre pâtissier, petit-lait en poudre, cacao maigre, émulsifiant (lécithine de soja \nou tournesol), arôme naturel de vanille, sel, poudre à lever", "allergenes": ["['Lait', 'gluten', 'soja']"], "nutriscore": "E", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 5, "produit": "Fuze Tea Slim", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Eau, thé (extraits), sucre, arômes naturels, acidifiants (acide citrique, citrates…), \nconservateurs, édulcorants (ex : sucralose, acésulfame-K)", "allergenes": ["[]"], "nutriscore": "D", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 6, "produit": "Coca Slim", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Eau gazéifiée, sucre, colorant caramel (E150d), acide phosphorique, arômes naturels, caféine", "allergenes": ["[]"], "nutriscore": "E", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 7, "produit": "Madeleines natures", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Farine de blé, huile de colza, sucre, œufs, stabilisant (glycérol, sorbitol), sirop de glucose-fructose, \némulsifiant (mono- et diglycérides d’acides gras, lécithine de soja), poudres à lever (diphosphates, \ncarbonates de sodium), sel, fécule, arôme", "allergenes": ["['Gluten (blé)', 'œufs', 'soja', 'traces possibles : lait', 'fruits à coque']"], "nutriscore": "D", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 8, "produit": "M&M's", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Sucre, cacao maigre, beurre de cacao, lait écrémé en poudre, lactose, sirop de glucose, amidon de maïs,\n huile (palme, ou autres huiles végétales), émulsifiants (lécithine de soja), colorants, arômes, sel", "allergenes": ["['Lait', 'soja', 'traces possibles : fruits à \\ncoque', 'gluten']"], "nutriscore": "E", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 9, "produit": "Bahia", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Jus et purées de fruits à base de concentrés (en fonction des arômes ~ 35 %, ~ 20 %, ~ 10 %), eau, \nextrait de maté (0,24 %), acidifiant (acide citrique), arôme naturel", "allergenes": ["[]"], "nutriscore": "C", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 10, "produit": "Clipper", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Eau, jus de fruits à base de concentré, arômes naturels", "allergenes": ["[]"], "nutriscore": "nan", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 11, "produit": "Coca Zero Slim", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Eau gazéifiée, colorant caramel (E150d), acidifiants (acide phosphorique, citrates), édulcorants \n(aspartame, acésulfame-K), arômes, caféine", "allergenes": ["['Contient une source de phénylalanine \\n(lié à l’aspartame)']"], "nutriscore": "B", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 12, "produit": "Bos", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Eau, sucre de canne*, régulateur d’acidité (acide citrique), extrait de rooibos* (0,1 %), arôme naturel", "allergenes": ["[]"], "nutriscore": "B", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 13, "produit": "Grand cookie moelleux", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Flocons d’avoine, sucre de canne, huile de tournesol, farine de blé, pépites de chocolat (sucre de canne, \npâte de cacao, beurre de cacao), sirop de riz, poudres à lever (bicarbonate de sodium), sel marin. \n(Ingrédients issus de l’agriculture biologique)", "allergenes": ["['Gluten', 'soja (dans le chocolat)', 'traces possibles de lait et fruits à coque.']"], "nutriscore": "C", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 14, "produit": "Twix", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Sucre, sirop de glucose, farine de blé (≈ 17 %), matière grasse de palme, beurre de cacao, lait écrémé en \npoudre, pâte de cacao, lactose, beurre concentré, petit-lait en poudre, cacao maigre, sel, émulsifiant \n(lécithine de soja), poudre à lever, extrait naturel de vanille", "allergenes": ["['Lait', 'gluten', 'soja (et peut contenir traces \\nde cacahuètes', 'amandes', 'noisettes)']"], "nutriscore": "E", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 15, "produit": "Gaufres Liégeoises", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Farine de froment, sucre (≈ 24,5 %), margarine (huiles végétales palme/colza, eau, émulsifiants, sel, \ncorrecteur d’acidité), œufs, levure, farine de soja, sucre inverti, stabilisant (sorbitol), sel, arôme", "allergenes": ["['Gluten', 'œufs', 'soja (et traces possibles \\nde lait)']"], "nutriscore": "nan", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 16, "produit": "Gaufres au miel Bjorg", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Farine de blé semi-complète, sucre, miel (12 %), margarine (huiles végétales, eau, émulsifiants), sirop de \nsucre inverti, œuf en poudre, sel, émulsifiant (lécithine tournesol), agent levant", "allergenes": ["['Gluten', 'œufs', 'traces possibles de lait', 'fruits à coque', 'soja']"], "nutriscore": "C", "ecoscore": "B", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 17, "produit": "Chips BCBG", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Pommes de terre, huile de tournesol oléique, sel", "allergenes": ["[]"], "nutriscore": "E", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 18, "produit": "Petits cookies français", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Farine de blé, sucre, huile de colza, éclats de chocolat (pâte de cacao, sucre, beurre de cacao), œufs, sirop de \nglucose-fructose, poudres à lever, sel, arôme naturel de vanille.", "allergenes": ["['Gluten', 'œufs', 'soja', 'lait (traces possibles)']"], "nutriscore": "D", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 19, "produit": "Perrier Slim", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Eau minérale gazeuse, dioxyde de carbone, arôme naturel", "allergenes": ["[]"], "nutriscore": "A", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 20, "produit": "7up", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Eau gazéifiée, sucre, acidifiants (acide citrique), arômes, correcteurs d’acidité (citrates)", "allergenes": ["[]"], "nutriscore": "E", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 21, "produit": "Haribo mix", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Sirop de glucose, sucre, gélatine, farine de blé, dextrose, amidons (maïs, blé), acidifiants (acide citrique, \nacide malique), correcteurs d’acidité, arômes, concentrés de fruits/plantes, colorants, agents d’enrobage, \ncire d’abeille, cire de carnauba, graisse de palme, émulsifiants, amidon modifié", "allergenes": ["['Gluten (blé)', 'lait (traces possibles)']"], "nutriscore": "E", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 22, "produit": "Madeleines marbrées", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Farine de blé, sucre, huile de colza, œufs, sirop de glucose-fructose, lait demi-écrémé, arôme naturel de \nvanille, poudres à lever, sel", "allergenes": ["['Gluten', 'œufs', 'lait']"], "nutriscore": "D", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 23, "produit": "Compotes Gourde", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "100 % fruits (ex. mixé du verger pomme, poire, pêche) sans sucres ajoutés ni colorants", "allergenes": ["[]"], "nutriscore": "A", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 24, "produit": "Chips Too Good", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Farine de soja (30 %), amidon de tapioca, pomme de terre déshydratée (13 %), huile de tournesol, amidon \nde pomme de terre, sel, arôme, épices, exhausteurs de goût", "allergenes": ["['Soja']"], "nutriscore": "E", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 25, "produit": "Fourrés Choco Noir", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Farine de blé, chocolat noir (masse de cacao, sucre de canne, beurre de cacao), sucre de canne non raffiné, \nfarine complète de blé*, huile de tournesol oléique, arôme naturel de vanille, lait écrémé en poudre, sel marin, \npoudres à lever (carbonates d’ammonium, carbonates de sodium), gomme d’acacia, antioxydant", "allergenes": ["['Gluten', 'lait', 'peut contenir traces d’œufs', 'fruits à coque', 'sésame']"], "nutriscore": "D", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 26, "produit": "Snickers", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Sucre, sirop de glucose, cacahuètes, lait écrémé en poudre, beurre de cacao, pâte de cacao, \nhuile de tournesol, beurre concentré (lait), petit-lait en poudre, matière grasse de palme, sel, émulsifiant \n(lécithine de soja), blanc d’œuf en poudre, huile de noix de coco, protéine de lait hydrolysée, arôme naturel \nde vanille", "allergenes": ["['Arachides (cacahuètes)', 'lait', 'soja', 'œuf', 'traces possibles de fruits à coque']"], "nutriscore": "E", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 27, "produit": "Gerblé Choco", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Farine de blé, sucre, huile de colza, germe de blé, pépites de chocolat (avec pâte de cacao, sucre, beurre de \ncacao, émulsifiant lécithine de soja), lait fermenté poudre, amidon, fibres d’avoine, poudres à lever, \narôme naturel, sel", "allergenes": ["['Gluten', 'lait', 'œufs', 'soja', 'noisettes \\n(fruits à coque) (traces possibles)']"], "nutriscore": "C", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 28, "produit": "Crackers Bon Papa", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Farine de blé, huile de tournesol haute teneur en acide oléique, sel, huile d’olive extra-vierge 2 %, \ntomate déshydratée, origan, oignon déshydraté, basilic, graines de sésame", "allergenes": ["['Gluten', 'sésame (traces possibles de \\nlait', 'soja', 'moutarde', 'fruits à coque)']"], "nutriscore": "nan", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 29, "produit": "Noot's", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Figues séchées (≈ 21,5 %), farine de riz, flocons d’avoine, amandes grillées (≈ 14 %), miel (≈ 9 %), graines \ndiverses, sirop (glucose, etc.), arômes naturels, huile de tournesol, sel", "allergenes": ["['Fruits à coque (amandes)', 'gluten (avoine)']"], "nutriscore": "C", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}, {"id": 30, "produit": "Galettes de Riz Choco", "categorie": "nan", "site": "Lyon 2", "disponible_lyon2": true, "ingredients": "Chocolat noir 50 % (pâte de cacao, sucre, beurre de cacao), riz brun 42,5 %, brisures de riz blanc 7,5 % \n(ingrédients biologiques)", "allergenes": ["['Peut contenir du soja (dans le chocolat)']"], "nutriscore": "C", "ecoscore": "nan", "poids_volume": "nan", "prix_eur": null, "image_url": "nan", "url_produit": "nan"}];
+
+  const $ = (sel) => document.querySelector(sel);
+  const grid = $("#grid");
+  const empty = $("#empty");
+  const q = $("#q");
+  const nutri = $("#nutri");
+  const eco = $("#eco");
+
+  // Insert logo if provided
+  const brandSlot = document.getElementById("brandSlot");
+  if (LOGO_URL) {
+    brandSlot.className = "brand-img";
+    brandSlot.innerHTML = `<img src="${LOGO_URL}" alt="Logo" />`;
+  }
+
+  function normalize(str) {
+    return (str || "").toString().toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+  }
+
+  function productCard(p) {
+    const allergens = (p.allergenes || []).map(a => `<span class="chip">${a}</span>`).join(" ");
+    const nutri = p.nutriscore ? `<span class="score" data-type="nutri" data-value="${p.nutriscore}">Nutri-${p.nutriscore}</span>` : "";
+    const eco = p.ecoscore ? `<span class="score" data-type="eco" data-value="${p.ecoscore}">Éco-${p.ecoscore}</span>` : `<span class="chip">Éco-N/A</span>`;
+    return `
+      <article class="card">
+        <h3>${p.produit || "Sans nom"}</h3>
+        <div class="row muted">${nutri} ${eco} ${p.poids_volume ? `<span class="chip">${p.poids_volume}</span>` : ""}</div>
+        <div class="muted">${p.ingredients || "—"}</div>
+        <div class="row">${allergens}</div>
+      </article>
+    `;
+  }
+
+  function applyFilters() {
+    const term = normalize(q.value);
+    const ns = nutri.value;
+    const es = eco.value;
+
+    const out = DATA.filter(p => {
+      if (!(p.disponible_lyon2 || (p.site||"").toLowerCase().includes("lyon 2"))) return false;
+      if (ns && (p.nutriscore||"") !== ns) return false;
+      if (es) {
+        if (es === "NA" && (p.ecoscore||"") !== "") return false;
+        if (es !== "NA" && (p.ecoscore||"") !== es) return false;
+      }
+      if (!term) return true;
+      const hay = normalize([p.produit, p.ingredients, (p.allergenes||[]).join(" "), p.categorie].join(" "));
+      return hay.includes(term);
+    });
+
+    grid.innerHTML = out.map(productCard).join("");
+    empty.style.display = out.length ? "none" : "block";
+  }
+
+  q.addEventListener("input", applyFilters);
+  nutri.addEventListener("change", applyFilters);
+  eco.addEventListener("change", applyFilters);
+  applyFilters();
+</script>
+</body>
+</html>
